@@ -31,4 +31,23 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
+      - name: "setup terraform"
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: latest
+          cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+  
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan
+
+      
         
