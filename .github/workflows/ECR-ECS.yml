@@ -16,6 +16,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+        
+      - name: "login to ECR"
+        uses: aws-actions/amazon-ecr-login@v2
 
-      - name: "test aws connection"
-        run: aws s3 ls
+      
