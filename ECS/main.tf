@@ -31,7 +31,7 @@ resource "aws_ecs_task_definition" "cfl_task_definition" {
   memory = "512"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn = var.execution_role_arn
-  container_definitions = jsondecode([
+  container_definitions = jsonencode([
     {
        name = "flask-app-container"
        image = var.image_id
