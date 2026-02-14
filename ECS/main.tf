@@ -33,15 +33,15 @@ resource "aws_ecs_task_definition" "cfl_task_definition" {
   execution_role_arn = var.execution_role_arn
   container_definitions = jsondecode([
     {
-       name: "flask-app-container"
-       image: var.image_id
-       cpu: 256
-       memory: 512
+       name = "flask-app-container"
+       image = var.image_id
+       cpu = 256
+       memory = 512
        portMappings = [
         {
-          containerPort: 5000
-          hostPort: 5000
-          protocol: "tcp"
+          containerPort = 5000
+          hostPort = 5000
+          protocol = "tcp"
         }
        ]
 
