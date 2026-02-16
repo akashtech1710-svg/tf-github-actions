@@ -49,5 +49,9 @@ jobs:
         id: plan
         run: terraform plan
 
+      - name: Terraform apply
+        id: apply
+        run: terraform apply
+
       
         
