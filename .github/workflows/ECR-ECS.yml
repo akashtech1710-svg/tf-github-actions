@@ -31,10 +31,6 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-  ECS-create:
-    name: Create ECS service and run the application
-    runs-on: ubuntu-latest
-    steps:
       - name: "setup terraform"
         uses: hashicorp/setup-terraform@v3
         with:
