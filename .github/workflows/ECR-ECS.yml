@@ -5,7 +5,7 @@ on:
 jobs:
   ECR-ECS:
     name: "Build docker image and push to ECR"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: "checkout"
         uses: actions/checkout@v6
