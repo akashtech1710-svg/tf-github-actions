@@ -45,7 +45,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
 
       - name: Terraform Init
-        id: init
+        id: init-reconfigure
         run: terraform init -reconfigure
 
       - name: "select tf workspace"
