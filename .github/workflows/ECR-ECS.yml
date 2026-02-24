@@ -44,13 +44,17 @@ jobs:
           terraform_version: latest
           cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
 
+      - name: Terraform Init
+        id: init
+        run: terraform init -reconfigure
+
       - name: "select tf workspace"
         run: |
           terraform workspace select ${{ github.ref_name }} || terraform workspace new ${{ github.ref_name }}
 
       - name: Terraform Init
         id: init
-        run: terraform init -reconfigure
+        run: terraform init
         
       - name: Terraform Validate
         id: validate
