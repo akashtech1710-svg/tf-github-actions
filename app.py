@@ -1,32 +1,47 @@
-from flask import Flask
+from flask import Flask, jsonify, request, render_template
 import random
 import time
+import os
+import socket
 
 app = Flask(__name__)
 
-@app.route('/time')
-def get_current_time():
-    timestamp = str(int(time.time()))
-    response = {
-        "time":  timestamp,
-        "message": "success",
-        "httpsresponse": "200",
-        "testedTIME": "yes"
-    }
-    return response
-
-## Add a new route here
-@app.route('/random')
-def get_random_numbers():
-    numbers = [random.randint(0, 5) for _ in range(10)]
-    response = {
-        "random_number": numbers,
-        "message": "success",
-        "httpsresponse": "200",
-        "testedTIME": "yes"
-    }
-    return response
+HOSTNAME = socket.gethostname()
+ENVIRONMENT = os.getenv("ENVIRONMENT", "dev")
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+@app.route("/health")
+def health():
+    return jsonify({
+        "status": "healthy",
+        "hostname": HOSTNAME,
+        "environment": ENVIRONMENT
+    })
+
+
+@app.route("/api/time")
+def get_time():
+    return jsonify({
+        "time": int(time.time()),
+        "hostname": HOSTNAME,
+        "environment": ENVIRONMENT
+    })
+
+
+@app.route("/api/random")
+def random_numbers():
+    numbers = [random.randint(1, 100) for _ in range(5)]
+    return jsonify({
+        "numbers": numbers,
+        "hostname": HOSTNAME,
+        "environment": ENVIRONMENT
+    })
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

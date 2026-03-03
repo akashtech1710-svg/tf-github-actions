@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask DevOps Demo</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        button { padding: 10px 20px; margin: 10px; }
+        .card { border: 1px solid #ccc; padding: 20px; margin: 20px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<h1>🚀 Flask DevOps Demo</h1>
+
+<div class="card">
+    <h3>Environment Info</h3>
+    <button onclick="getHealth()">Check Health</button>
+    <p id="health"></p>
+</div>
+
+<div class="card">
+    <h3>Current Time</h3>
+    <button onclick="getTime()">Get Time</button>
+    <p id="time"></p>
+</div>
+
+<div class="card">
+    <h3>Random Numbers</h3>
+    <button onclick="getRandom()">Generate</button>
+    <p id="random"></p>
+</div>
+
+<script>
+function getHealth() {
+    fetch("/health")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("health").innerText =
+                "Status: " + data.status +
+                " | Host: " + data.hostname +
+                " | Env: " + data.environment;
+        });
+}
+
+function getTime() {
+    fetch("/api/time")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("time").innerText =
+                "Time: " + data.time +
+                " | Host: " + data.hostname;
+        });
+}
+
+function getRandom() {
+    fetch("/api/random")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("random").innerText =
+                "Numbers: " + data.numbers.join(", ") +
+                " | Host: " + data.hostname;
+        });
+}
+</script>
+
+</body>
+</html>
