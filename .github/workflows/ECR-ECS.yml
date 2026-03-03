@@ -44,9 +44,6 @@ jobs:
           terraform_version: latest
           cli_config_credentials_token: ${{ secrets.TFC_API_TOKEN }}
 
-      - name: "select workspace"
-        run: echo "TF_WORKSPACE=${{ github.ref_name }}" >> $GITHUB_ENV
-
       - name: Terraform Init
         id: init
         run: terraform init

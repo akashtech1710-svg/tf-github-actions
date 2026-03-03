@@ -11,7 +11,7 @@ terraform {
     organization = "akash6975"
 
     workspaces {
-      prefix = "cfl-workspace-"
+      name = "cfl-workspace"
     }
   }
 }
