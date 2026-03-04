@@ -2,6 +2,10 @@ data "aws_vpc" "existing_vpc" {
   id = var.vpc_id
 }
 
+resource "aws_cloudwatch_log_group" "cfl_log_group" {
+  name = var.log_group_name
+}
+
 resource "aws_security_group" "cfl_sg" {
     vpc_id = data.aws_vpc.existing_vpc.id
     name = "cfl-security-group"
@@ -44,6 +48,14 @@ resource "aws_ecs_task_definition" "cfl_task_definition" {
           protocol = "tcp"
         }
        ]
+       logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group" = "/ecs/cfl-project"
+          "awslogs-region" = "us-east-1"
+          "awslogs-stream-prefix" = "ecs"
+        }
+       }
 
     }
   ])

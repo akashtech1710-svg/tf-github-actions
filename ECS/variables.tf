@@ -25,3 +25,7 @@ variable "image_id" {
 variable "execution_role_arn" {
   
 }
+
+variable "log_group_name" {
+  
+}
