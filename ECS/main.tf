@@ -2,10 +2,12 @@ data "aws_vpc" "existing_vpc" {
   id = var.vpc_id
 }
 
+#creating cloudwatch log group
 resource "aws_cloudwatch_log_group" "cfl_log_group" {
   name = var.log_group_name
 }
 
+#creating security group
 resource "aws_security_group" "cfl_sg" {
     vpc_id = data.aws_vpc.existing_vpc.id
     name = "cfl-security-group"
@@ -29,6 +31,35 @@ resource "aws_security_group" "cfl_sg" {
     }
 }
 
+#creating load balancer
+resource "aws_lb" "cfl_alb" {
+  name = "cfl-alb"
+  internal = false
+  load_balancer_type = "application"
+  security_groups = [aws_security_group.cfl_sg.id]
+  subnets = [var.subnet_id[0], var.subnet_id[1]]
+}
+
+#creating target group
+resource "aws_lb_target_group" "cfl_target_group" {
+  name = "cfl_target_group"
+  port = 5000
+  protocol = "HTTP"
+  vpc_id = data.aws_vpc.existing_vpc.id
+}
+
+#creating listener
+resource "aws_lb_listener" "cfl_listener" {
+  load_balancer_arn = aws_lb.cfl_alb.arn
+  port = 80
+  protocol = "HTTP"
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.cfl_target_group.arn
+  }
+}
+
+#creating task definition
 resource "aws_ecs_task_definition" "cfl_task_definition" {
   family = var.cluster_task_service_name
   network_mode = "awsvpc"
@@ -63,6 +94,7 @@ resource "aws_ecs_task_definition" "cfl_task_definition" {
   cpu = "256"
 }
 
+#creating ecs cluster
 resource "aws_ecs_cluster" "cfl_cluster" {
   name = var.cluster_name
 }
@@ -80,4 +112,9 @@ resource "aws_ecs_service" "cfl_service" {
     assign_public_ip = true
   }
   
+  load_balancer {
+    target_group_arn = aws_lb_target_group.cfl_target_group.arn
+    container_name = "flask-app-container"
+    container_port = 5000
+  }
 }
