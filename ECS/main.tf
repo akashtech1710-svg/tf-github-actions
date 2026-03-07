@@ -45,6 +45,7 @@ resource "aws_lb_target_group" "cfl_target_group" {
   name = "cfl-target-group"
   port = 5000
   protocol = "HTTP"
+  target_type = "ip"
   vpc_id = data.aws_vpc.existing_vpc.id
 }
 
