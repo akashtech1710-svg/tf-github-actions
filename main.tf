@@ -12,6 +12,6 @@ module "ecs" {
 
 module "ecs_autoscaling" {
   source       = "./ASG"
-  cluster_name = module.ecs.cluster_name
-  service_name = module.ecs.service_name
+  cluster_name = "cfl-cluster"
+  service_name = "cfl-service"
 }
