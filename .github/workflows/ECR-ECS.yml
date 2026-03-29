@@ -1,6 +1,6 @@
 name: "ECR-ECS-deployment"
 on:
-  workflow_dispatch:
+  push:
 
 permissions:
   id-token: write
