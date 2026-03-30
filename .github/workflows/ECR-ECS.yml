@@ -65,6 +65,8 @@ jobs:
         working-directory: ${{ env.TF_WORKDIR }}
         run: |
           echo "TF_WORKDIR: ${{ env.TF_WORKDIR }}"
+          pwd
+          ls -la
           terraform plan
 
       - name: Terraform apply
