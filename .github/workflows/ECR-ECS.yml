@@ -54,10 +54,6 @@ jobs:
         id: init
         working-directory: ${{ env.TF_WORKDIR }}
         run: terraform init
-
-      - name: checking current directory
-        run: |
-          pwd
         
       - name: Terraform Validate
         id: validate
@@ -67,7 +63,9 @@ jobs:
       - name: Terraform Plan
         id: plan
         working-directory: ${{ env.TF_WORKDIR }}
-        run: terraform plan
+        run: |
+          echo "TF_WORKDIR: ${{ env.TF_WORKDIR }}"
+          terraform plan
 
       - name: Terraform apply
         id: apply
