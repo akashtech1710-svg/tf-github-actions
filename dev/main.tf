@@ -1,5 +1,5 @@
 module "ecs" {
-    source = "../modules/ECS"
+    source = "/home/ec2-user/tf-github/modules/ECS"
     vpc_id = "vpc-04c7dd1feac34dbe3"
     subnet_id = ["subnet-0a3ff8a6ffa4f8059", "subnet-0dd98cc3b2a8e20dc"]
     log_group_name = "/ecs/cfl-project"
@@ -11,7 +11,7 @@ module "ecs" {
 }
 
 module "ecs_autoscaling" {
-  source       = "../modules/ASG"
+  source       = "/home/ec2-user/tf-github/modules/ASG"
   cluster_name = "cfl-cluster"
   service_name = "cfl-service"
 }
