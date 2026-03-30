@@ -53,6 +53,8 @@ jobs:
       - name: Terraform Init
         id: init
         working-directory: ${{ env.TF_WORKDIR }}
+        run: pwd
+        run: ls -la
         run: terraform init
         
       - name: Terraform Validate
