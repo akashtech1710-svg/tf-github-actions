@@ -15,7 +15,7 @@ jobs:
     name: "Build docker image and push to ECR"
     runs-on: self-hosted
     env:
-      TF_WORKDIR: ${{ github.ref_name == 'dev' && 'dev' || 'prod' }}
+      TF_WORKDIR: ${{ github.ref_name == 'dev' && 'dev' || 'main' }}
     steps:
       - name: "checkout"
         uses: actions/checkout@v6
